@@ -43,5 +43,43 @@ public class ListDemo
         System.out.println(staff); // (Scott replaces Rocket)
 
         // Has next method used to detirmine if there is another node after the iterator, often used in loops
+        i = staff.listIterator(); // |TNBSG
+        while (i.hasNext())
+        {
+            String n = i.next();
+            if (n.equals("Natasha")) // TN|BSG
+            {
+                i.remove(); // T|BSG
+            }
+        }
+        // TBSG|
+
+        // Enhanced for loops  work with link lists
+        for (String n : staff)
+        {
+            System.out.print(n + " ");
+        }
+
+        // Cannot modify a linked list while using an iterator unless you use the iterator to do so
+        i = staff.listIterator();
+        while (i.hasNext())
+        {
+            String n = i.next();
+            if (n.equals("Scott"))
+            {
+                staff.remove("Scott");
+            }
+        }
+        System.out.println();
+        System.out.println(staff);
+
+        // Enhanced for loop auto creates a iterator
+        for (String n : staff)
+        {
+            if (n.equals("Scott"));
+            {
+                staff.add("Rocket");
+            }
+        }
     }
 }
