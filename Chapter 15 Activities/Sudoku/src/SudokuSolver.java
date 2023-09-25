@@ -3,13 +3,13 @@ import java.io.FileNotFoundException;
 import java.util.*;
 
 public class SudokuSolver {
-    private final int M = 3;
-    private final int N = M * M;
-    private int[][] grid;
-    private ArrayList<Set<Integer>> rows;
-    private ArrayList<Set<Integer>> cols;
-    private ArrayList<Set<Integer>> squares;
-    private Set<Integer> nums;
+    private final int M = 3; // In row
+    private final int N = M * M; // Total in box
+    private int[][] grid; // Grid of nums
+    private ArrayList<Set<Integer>> rows; // Nums in row
+    private ArrayList<Set<Integer>> cols; // Nums in cols
+    private ArrayList<Set<Integer>> squares; // Each indivdual sqaure
+    private Set<Integer> nums; // Nums 1-9
 
     public SudokuSolver(String fileName) {
         // read the puzzle file
@@ -36,10 +36,29 @@ public class SudokuSolver {
         }
 
         // create the list of sets for each row (this.rows)
-        // ...
+        this.rows = new ArrayList<>();
+        for (int i = 0; i < N; i++)
+        {
+            Set<Integer> rowSet = new HashSet<>();
+            for (int a = 0; a < N; a++)
+            {
+                rowSet.add(grid[i][a]);
+            }
+            this.rows.add(rowSet);
+        }
 
         // create the list of sets for each col (this.cols)
-        // ...
+        this.cols = new ArrayList<>();
+        for (int i = 0; i < N; i++)
+        {
+            Set<Integer> colSet = new HashSet<>();
+            for (int a = 0; a < N; a++)
+            {
+                colSet.add(grid[i][a]);
+            }
+            this.cols.add(colSet);
+        }
+
 
         // create the list of sets for each square (this.squares)
         /* the squares are added to the list row-by-row:
@@ -141,7 +160,7 @@ public class SudokuSolver {
     }
 
     public static void main(String[] args) {
-        String fileName = "src/puzzle1.txt";
+        String fileName = "Chapter 15 Activities/Sudoku/src/puzzle1.txt";
 
         SudokuSolver solver = new SudokuSolver(fileName);
         System.out.println(solver);
