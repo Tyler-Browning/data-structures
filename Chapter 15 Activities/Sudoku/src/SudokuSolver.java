@@ -54,7 +54,7 @@ public class SudokuSolver {
             Set<Integer> colSet = new HashSet<>();
             for (int a = 0; a < N; a++)
             {
-                colSet.add(grid[i][a]);
+                colSet.add(grid[a][i]);
             }
             this.cols.add(colSet);
         }
@@ -66,8 +66,25 @@ public class SudokuSolver {
             3 4 5
             6 7 8
          */
-        // ...
-
+        this.squares = new ArrayList<>();
+        for (int i = 0; i < N; i = i + 3)
+        {
+            //Set<Integer> sqSet = new HashSet<>();
+            for (int x = 0; x < N; x = x + 3)
+            {
+                Set<Integer> sqSet = new HashSet<>();
+                for (int a = 0; a < N/3; a++)
+                {
+                    for (int b = 0; b < N/3; b++)
+                    {
+                        sqSet.add(grid[a + i][b + x]);
+                    }
+                    //this.squares.add(sqSet);
+                }
+                this.squares.add(sqSet);
+            }
+            
+        }
         // create a hash set for [1..9] (this.nums)
         // ...
 
