@@ -73,9 +73,9 @@ public class SudokuSolver {
             for (int x = 0; x < N; x = x + 3)
             {
                 Set<Integer> sqSet = new HashSet<>();
-                for (int a = 0; a < N/3; a++)
+                for (int a = 0; a < M; a++)
                 {
-                    for (int b = 0; b < N/3; b++)
+                    for (int b = 0; b < M; b++)
                     {
                         sqSet.add(grid[a + i][b + x]);
                     }
@@ -86,7 +86,9 @@ public class SudokuSolver {
             
         }
         // create a hash set for [1..9] (this.nums)
-        // ...
+        this.nums = new HashSet<Integer>();
+        for (int i = 1; i <= N; i++)
+            this.nums.add(i);
 
         // visually inspect that all the sets are correct
         for (int row = 0; row < N; row++) {
@@ -132,6 +134,9 @@ public class SudokuSolver {
          */
         Set<Integer> possibleNums = new HashSet<Integer>();
         possibleNums.addAll(this.nums);
+        possibleNums.removeAll(this.rows.get(nextRow));
+        possibleNums.removeAll(this.cols.get(nextCol));
+        possibleNums.removeAll(this.squares.get(M*(nextRow/M) + nextCol/M));
         
         // ...
 
@@ -155,7 +160,10 @@ public class SudokuSolver {
                  element in the grid back to 0 and removing possibleNum from all three corresponding
                  sets.
                  */
-                // ...
+                this.grid[nextRow][nextCol] = 0;
+                this.rows.get(nextRow).remove(possibleNum);
+                this.cols.get(nextCol).remove(possibleNum);
+                this.squares.get(M*(nextRow/M) + nextCol/M).remove(possibleNum);
             }
         }
 
