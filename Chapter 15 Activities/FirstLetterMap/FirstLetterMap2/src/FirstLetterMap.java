@@ -12,29 +12,44 @@ public class FirstLetterMap
 {
     public static void main(String[] args)
     {
-        String filename = "src/test1.txt";
+        String filename = "Chapter 15 Activities\\FirstLetterMap\\FirstLetterMap2\\src\\test1.txt";
 
         try (Scanner in = new Scanner(new File(filename)))
         {
-
-            // Create your map here
-            ...
+            // Create Tree Map
+            Map<Character, Set<String>> first = new TreeMap<>();
 
             while (in.hasNext())
             {
-                String word = clean(in.next());
+                String w = clean(in.next());
                 Character c = word.charAt(0);
 
                 // Update the map here
                 // Modify Worked Example 15.1
-                . . .
+                
+                Set<String> words = first.get(c);
 
-
+                if (words == null)
+                {
+                    words = new TreeSet<>();
+                    words.add(w);
+                    firstLetters.put(c, words);
+                }
+                else 
+                {
+                    words.add(w);
+                    first.put(c, words);
+                }
             }
 
             // Print the map here in this form
             // a: [a, able, aardvark]
-            . . .
+            
+            for (Character k : first.keySet())
+            {
+                System.out.println(k + ": " + first.get(k));
+            }
+
         } catch (FileNotFoundException e)
         {
             System.out.println("Cannot open: " + filename);
