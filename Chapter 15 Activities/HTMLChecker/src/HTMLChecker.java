@@ -21,8 +21,12 @@ public class HTMLChecker
 
         try (Scanner in = new Scanner(new File(filename)))
         {
-            // Your code goes here
-            . . .
+            Stack<String> stack = new Stack<>();
+            while (in.hasNext())
+            {
+                stack.push(in.next());
+            }
+            
 
 
         } catch (FileNotFoundException e)
