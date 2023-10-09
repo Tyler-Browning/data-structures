@@ -19,15 +19,45 @@ public class HTMLChecker
     {
         String filename = "src/TagSample1.html";
 
+
+        // Stack
+        Stack<String> stack = new Stack<>();
+        String current;
+        String test;
+
+
+        
         try (Scanner in = new Scanner(new File(filename)))
         {
-            Stack<String> stack = new Stack<>();
-            while (in.hasNext())
-            {
-                stack.push(in.next());
-            }
-            
+            // Your code goes here
+            String full = in.next();
+            current = full.substring(1, full.length() - 1);
+            stack.push(current);
 
+            while(in.hasNext())
+            {
+                String t = in.next();
+                
+                current = t.substring(1, full.length() - 1);
+
+                test = stack.pop();
+                if(!current.equals("/" + test))
+                {
+                    stack.push(test);
+                    stack.push(current);
+                }
+
+
+                
+                if(stack.size()==0)
+                {
+                    System.out.println("All tags are nested.");
+                }
+                else{
+                    System.out.println("There are improperly nested tags.");
+                }
+
+            }
 
         } catch (FileNotFoundException e)
         {
