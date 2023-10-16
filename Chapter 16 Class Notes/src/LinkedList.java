@@ -8,12 +8,16 @@ import java.util.NoSuchElementException;
 */
 public class LinkedList
 {
-
+    // First node in the list, if empty first == null
+    private Node first;
 
     /**
         Constructs an empty linked list.
     */
-
+    public LinkedList()
+    {
+        this.first = null;
+    }
 
 
 
@@ -21,7 +25,14 @@ public class LinkedList
         Returns the first element in the linked list.
         @return the first element in the linked list
     */
-
+    public Object getFirst()
+    {
+        if (this.first == null)
+        {
+            throw new NoSuchElementException();
+        }
+        return this.first.data;
+    }
 
 
 
@@ -29,8 +40,16 @@ public class LinkedList
         Removes the first element in the linked list.
         @return the removed element
     */
-
-
+    public Object removeFirst()
+    {
+        if (this.first == null)
+        {
+            throw new NoSuchElementException();
+        }
+        Object element = this.first.data;
+        this.first = this.first.next;
+        return element;
+    }
 
 
 
@@ -38,8 +57,13 @@ public class LinkedList
         Adds an element to the front of the linked list.
         @param element the element to add
     */
-
-
+    public void addFirst(Object element)
+    {
+        Node newNode = new Node();
+        newNode.data = element;
+        newNode.next = this.first;
+        this.first = newNode;
+    }
 
 
 
@@ -52,19 +76,31 @@ public class LinkedList
 
 
 
-    //Class Node
+    // Class Node
+    // Static becauseit doesn't need access to anything
+    static class Node
+    {
+        public Object data;
+        public Node next;
+    }
 
-
-    class LinkedListIterator //implements ListIterator
+    class LinkedListIterator implements ListIterator
     {
       //private data
-
+        private Node pos;
+        private Node prev;
+        private boolean isNext;
 
         /**
             Constructs an iterator that points to the front
             of the linked list.
         */
-
+        public LinkedListIterator()
+        {
+            pos = null;
+            prev = null;
+            isNext = false;
+        }
 
         /**
             Moves the iterator past the next element.
