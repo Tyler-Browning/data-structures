@@ -41,7 +41,16 @@ public class LinkedList
     */
     public boolean contains(Object obj)
     {
-        // ...
+        Node node = first;
+        while (node != null)
+        {
+            if (obj.equals(node.data))
+            {
+                return true;
+            }
+            node = node.next;
+        }
+        return false;
     }
 
     /**
