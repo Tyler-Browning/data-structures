@@ -23,10 +23,9 @@ public class LinkedListQueue
     */
     public void firstToLast()
     {
-        . . .
-
-
-
+        Object tempH = head.data;
+        remove();
+        add(tempH);
     }
 
     /**
