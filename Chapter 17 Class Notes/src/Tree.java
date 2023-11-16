@@ -59,4 +59,15 @@ public class Tree
     }
 
     // Additional methods will be added in later sections.
+
+    // Visitor interface
+
+    public interface Visitor
+    {
+        // Called for each node visitor
+
+        void visit(Object data);
+    }
+
+    
 }

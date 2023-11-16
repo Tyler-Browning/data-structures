@@ -127,6 +127,27 @@ public class BinarySearchTree
             {
                 parent.right = child;
             }
+
+            return;
+        }
+
+        // Case 3 (Node has two children)
+        Node leastP = removed;
+        Node least = removed.right;
+        while (least.left != null)
+        {
+            leastP = least;
+            least = least.left;
+        }
+        
+        removed.data = least.data;
+        if (leastP == removed)
+        {
+            leastP.right = least.right;
+        }
+        else
+        {
+            leastP.left = least.right;
         }
     }
     
@@ -135,7 +156,8 @@ public class BinarySearchTree
     */
     public void print()
     {   
-        
+        print(this.root);
+        System.out.println();
     }   
 
     /**
@@ -144,7 +166,14 @@ public class BinarySearchTree
     */
     private static void print(Node parent)
     {   
-        
+        if (parent == null)
+        {
+            return;
+        }
+
+        print(parent.left);
+        System.out.println(parent.data + " ");
+        print(parent.right);
     }
 
     /**
