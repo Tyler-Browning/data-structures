@@ -68,6 +68,5 @@ public class Tree
 
         void visit(Object data);
     }
-
     
 }
