@@ -74,6 +74,7 @@ public class MorseCode
         codeMap.put(letter, code);
         
         treeInsert(letter, code);
+        treeInsert(letter, code);
     }
 
     /**
