@@ -168,14 +168,14 @@ public class MorseCode {
                 // Exits the loop
                 continue;
             }
-            if(morse.charAt(i) == DOT)
+            if(morse.charAt(i) == DASH)
             {
-                node = node.getLeft();
+                node = node.getRight();
             } 
                 
             else 
             {
-                node = node.getRight();
+                node = node.getLeft();
             }
         }
         
