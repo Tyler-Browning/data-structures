@@ -3,25 +3,22 @@ import java.util.Collections;
 import java.util.List;
 import java.util.ArrayList;
 
-public class MorseCode
-{
+public class MorseCode {
     private static final char DOT = '.';
     private static final char DASH = '-';
 
     private static TreeMap<Character, String> codeMap;
     private static TreeNode decodeTree;
 
-    public static void main(String[] args)
-    {
-        MorseCode.start();  
+    public static void main(String[] args) {
+        MorseCode.start();
         System.out.println(MorseCode.encode("Watson come here"));
         BTreePrinter.printNode(decodeTree);
     }
 
-    public static void start()
-    {
+    public static void start() {
         codeMap = new TreeMap<Character, String>();
-        decodeTree = new TreeNode(' ', null, null);  // autoboxing
+        decodeTree = new TreeNode(' ', null, null); // autoboxing
         // put a space in the root of the decoding tree
 
         addSymbol('A', ".-");
@@ -69,89 +66,123 @@ public class MorseCode
      * Inserts a letter and its Morse code string into the encoding map
      * and calls treeInsert to insert them into the decoding tree.
      */
-    private static void addSymbol(char letter, String code)
-    {
+    private static void addSymbol(char letter, String code) {
         codeMap.put(letter, code);
-        
-        treeInsert(letter, code);
         treeInsert(letter, code);
     }
 
     /**
      * Inserts a letter and its Morse code string into the
-     * decoding tree.  Each dot-dash string corresponds to a path
+     * decoding tree. Each dot-dash string corresponds to a path
      * in the tree from the root to a node: at a "dot" go left, at a "dash" go
-     * right.  The node at the end of the path holds the symbol
+     * right. The node at the end of the path holds the symbol
      * for that code string.
      */
-    private static void treeInsert(char letter, String code)
-    {
-        treeInsertHelper(letter, code, decodeTree);  
-    }
-
-    private static void treeInsertHelper(char letter, String code, TreeNode node)
-    {
-        int count = 0;
-        TreeNode parent = node; 
-
-        if (code.charAt(count) == DOT)
+    private static void treeInsert(char letter, String code) {
+        TreeNode node = decodeTree;
+        for(int i = 0; i < code.length(); i++)
         {
-            if (parent.getLeft() == null)
+            if(code.charAt(i) == DOT)
             {
-                parent.setLeft(new TreeNode(letter, null, null));
+                if(node.getLeft() == null)
+                {
+                    node.setLeft(new TreeNode(null));
+                }
+                
+                node = node.getLeft();
             } 
+                
             else 
             {
-                treeInsertHelper(letter, code, parent.getLeft());
+                if(node.getRight() == null)
+                {
+                    node.setRight(new TreeNode(null));
+                }
+                
+                node = node.getRight();
             }
         }
-        else
-        {
-            if (parent.getRight() == null)
-            {
-                parent.setRight(new TreeNode(letter, null, null));
-            }
-            else
-            {
-                treeInsertHelper(letter, code, parent.getRight());
-            }
-        }
+        
+        node.setValue(letter);
     }
 
+
+    
     /**
-     * Converts text into a Morse code message.  Adds a space after a dot-dash
-     * sequence for each letter.  Other spaces in the text are transferred directly
+     * Converts text into a Morse code message. Adds a space after a dot-dash
+     * sequence for each letter. Other spaces in the text are transferred directly
      * into the encoded message.
      * Returns the encoded message.
      */
-    public static String encode(String text)
+    public static String encode(String text) 
     {
-        StringBuffer morse = new StringBuffer(400);
+        StringBuffer morse = new StringBuffer(6*text.length());
+        String letter;
 
-        String c = text.substring(0,1);
-        System.out.println(codeMap.get(c));
+        
+        for(int i = 0; i < text.length(); i++)
+        {
+            if(text.charAt(i) == ' ')
+            {
+                morse.append(" ");
+            }
+            letter = codeMap.get(text.toUpperCase().charAt(i)) + " ";
 
-
+            
+            if(letter.equals("null "))
+            {
+                letter = "  ";
+            }
+            
+            morse.append(letter);
+        }
+        
         return morse.toString();
     }
 
+
+    
     /**
-     * Converts a Morse code message into a text string.  Assumes that dot-dash
-     * sequences for each letter are separated by one space.  Additional spaces are
+     * Converts a Morse code message into a text string. Assumes that dot-dash
+     * sequences for each letter are separated by one space. Additional spaces are
      * transferred directly into text.
      * Returns the plain text message.
      */
-    public static String decode(String morse)
+    public static String decode(String morse) 
     {
-        StringBuffer text = new StringBuffer(100);
+        StringBuffer txt = new StringBuffer(1 + morse.length()/6);
+        TreeNode node = decodeTree;
 
-        /*
-            !!! INSERT CODE HERE
-        */
-
-        return text.toString();
+        for(int i = 0; i < morse.length(); i++)
+        {
+            if(morse.charAt(i) == ' ')
+            {
+                txt.append(node.getValue());
+                if(i + 1 < morse.length() && morse.charAt(i + 1) == ' ')
+                {
+                    txt.append(" ");
+                    i++;
+                }
+                node = decodeTree;
+                
+                //
+            }
+            if(morse.charAt(i) == DOT)
+            {
+                node = node.getLeft();
+            } 
+                
+            else 
+            {
+                node = node.getRight();
+            }
+        }
+        
+        return txt.toString();
     }
 }
+
+
 
 /**
  * BTreePrinter class courtesy of Karen Ge (@karenge1)
@@ -229,8 +260,8 @@ class BTreePrinter {
         if (node == null)
             return 0;
 
-        return Math.max(BTreePrinter.maxLevel(node.getLeft()), 
-            BTreePrinter.maxLevel(node.getRight())) + 1;
+        return Math.max(BTreePrinter.maxLevel(node.getLeft()),
+                BTreePrinter.maxLevel(node.getRight())) + 1;
     }
 
     private static <T> boolean isAllElementsNull(List<T> list) {
