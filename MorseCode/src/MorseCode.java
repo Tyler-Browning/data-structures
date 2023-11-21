@@ -1,4 +1,4 @@
-import java.util.TreeMap;
+timport java.util.TreeMap;
 import java.util.Collections;
 import java.util.List;
 import java.util.ArrayList;
@@ -165,7 +165,8 @@ public class MorseCode {
                 }
                 node = decodeTree;
                 
-                //
+                // Exits the loop
+                continue;
             }
             if(morse.charAt(i) == DOT)
             {
