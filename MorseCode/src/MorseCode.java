@@ -10,9 +10,9 @@ public class MorseCode {
     private static TreeMap<Character, String> codeMap;
     private static TreeNode decodeTree;
 
-    public static void main(String[] args) 
+    public static void main(String[] args)
     {
-        MorseCode.start();
+        MorseCode.start();  
         System.out.println(MorseCode.encode("Watson come here"));
         BTreePrinter.printNode(decodeTree);
     }
@@ -151,36 +151,13 @@ public class MorseCode {
      */
     public static String decode(String morse) 
     {
-        StringBuffer txt = new StringBuffer(1 + morse.length()/6);
-        TreeNode node = decodeTree;
+        StringBuffer text = new StringBuffer(100);
 
-        for(int i = 0; i < morse.length(); i++)
-        {
-            if(morse.charAt(i) == ' ')
-            {
-                txt.append(node.getValue());
-                if(i + 1 < morse.length() && morse.charAt(i + 1) == ' ')
-                {
-                    txt.append(" ");
-                    i++;
-                }
-                node = decodeTree;
-                
-                // Exit the loop
-                continue;
-            }
-            if(morse.charAt(i) == DASH)
-            {
-                node = node.getRight();
-            } 
-                
-            else 
-            {
-                node = node.getLeft();
-            }
-        }
-        
-        return txt.toString();
+        /*
+            !!! INSERT CODE HERE
+        */
+
+        return text.toString();
     }
 }
 
