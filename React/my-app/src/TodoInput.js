@@ -1,3 +1,6 @@
+// Adds something to the todo list
+
+
 const TodoInput = ({ todo, setTodo, addTodo}) => {
     return (
         <div className = "input-wrapper">
